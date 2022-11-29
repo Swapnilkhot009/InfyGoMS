@@ -80,6 +80,7 @@ http://localhost:9000/infygo/registeruser =>give 2) as request body
 http://localhost:9000/infygo/loginuser/{userId}/{password} 
 http://localhost:9000/infygo/userdetails/{userId}
 
+consul agent -server -bootstrap-expect=1 -data-dir=infygoms -ui -bind=ip address
 
 Note:Circuit breaker and loadbalancer dependancies are in ticket microservices
      micrometer and prometheus dependancies are in all the micro services
