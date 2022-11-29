@@ -1,0 +1,63 @@
+package com.infygo.user.service;
+
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+import com.infygo.user.DTO.UserDTO;
+import com.infygo.user.entity.User;
+import com.infygo.user.exception.AlreadyExistsException;
+import com.infygo.user.exception.InvalidCredentialsException;
+import com.infygo.user.exception.NotExstingException;
+import com.infygo.user.repository.UserRepository;
+
+
+
+@Service
+@PropertySource("classpath:validation.properties")
+public class UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+	@Autowired
+	private ModelMapper modelMapper;
+	@Autowired
+	private Environment environment;
+	
+	
+	public UserDTO registerUser(UserDTO userDTO) throws AlreadyExistsException{
+		
+		User user = modelMapper.map(userDTO, User.class);
+		if(userRepository. getuserIdByName(user.getName())!=null) {
+			throw new AlreadyExistsException(
+					environment.getProperty("Already.Exists"));
+		}else {
+			userRepository.saveAndFlush(user);
+		}
+		return modelMapper.map(user, UserDTO.class);
+		
+	}
+
+	public String userLogin(UserDTO userDTO) throws InvalidCredentialsException, NotExstingException{
+		
+	User dbUser=userRepository.findByUserId(userDTO.getUserId());
+	if(dbUser==null)
+		throw new NotExstingException(environment.getProperty("Not.A.User"));
+	if(dbUser.getPassword().equals(userDTO.getPassword()))
+		return environment.getProperty("Logged.In");
+	else 
+		throw new InvalidCredentialsException(environment.getProperty("Invalid.Credentials"));
+	
+
+	}
+
+	public UserDTO getUserDeailsById(String userId) throws NotExstingException {
+		User user =userRepository.findById(userId).orElse(null);
+		if(user == null)
+			throw new NotExstingException(environment.getProperty("Oops! Not a registered user.Try to register"));
+		return modelMapper.map(user, UserDTO.class);
+		
+	}
+}

@@ -1,0 +1,83 @@
+package com.infygo.creditcard.DTO;
+public class CreditCardDTO {
+	private String cardNumber;
+	private String apin;
+	private String cardNameHolder;
+	private String cvv;
+	private String expiryMonth;
+	private String expiryYear;
+	private String totalBill;
+	private String amount;
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	public CreditCardDTO(String cardNumberString, String apin, String cardNameHolderString, String cvv,
+			String expiryMonth, String expiryYear, String totalBillString) {
+		super();
+		this.cardNumber = cardNumberString;
+		this.apin = apin;
+		this.cardNameHolder = cardNameHolderString;
+		this.cvv = cvv;
+		this.expiryMonth = expiryMonth;
+		this.expiryYear = expiryYear;
+		this.totalBill = totalBillString;
+	}
+	public CreditCardDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public String getCardNumberString() {
+		return cardNumber;
+	}
+	public void setCardNumberString(String cardNumberString) {
+		this.cardNumber = cardNumberString;
+	}
+	public String getApin() {
+		return apin;
+	}
+	public void setApin(String apin) {
+		this.apin = apin;
+	}
+	public String getCardNameHolderString() {
+		return cardNameHolder;
+	}
+	public void setCardNameHolderString(String cardNameHolderString) {
+		this.cardNameHolder = cardNameHolderString;
+	}
+	public String getCvv() {
+		return cvv;
+	}
+	public void setCvv(String cvv) {
+		this.cvv = cvv;
+	}
+	public String getExpiryMonth() {
+		return expiryMonth;
+	}
+	public void setExpiryMonth(String expiryMonth) {
+		this.expiryMonth = expiryMonth;
+	}
+	public String getExpiryYear() {
+		return expiryYear;
+	}
+	public void setExpiryYear(String expiryYear) {
+		this.expiryYear = expiryYear;
+	}
+	public String getTotalBillString() {
+		return totalBill;
+	}
+	public void setTotalBillString(String totalBillString) {
+		this.totalBill = totalBillString;
+	}
+	@Override
+	public String toString() {
+		return "CreditCardDTO [cardNumberString=" + cardNumber + ", apin=" + apin + ", cardNameHolderString="
+				+ cardNameHolder + ", cvv=" + cvv + ", expiryMonth=" + expiryMonth + ", expiryYear=" + expiryYear
+				+ ", totalBillString=" + totalBill + "]";
+	}
+	
+	
+	
+}

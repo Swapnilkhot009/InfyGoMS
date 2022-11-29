@@ -1,0 +1,18 @@
+package com.infygo.tickets.controller;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.infygo.tickets.DTO.FlightDTO;
+
+
+@FeignClient(name="FlightMS",url="http://localhost:9000/")
+public interface flightFeign {
+	@RequestMapping("/infygo/flights/details/{flightId}")
+	public FlightDTO getflightDeailsById(@PathVariable("flightId") String flightId);
+	@PostMapping("/infygo/flights/addpassanger/{flightId}/{seats}")
+	public void updateSeats(@PathVariable("flightId") String flightId,
+			@PathVariable("seats") Integer seats); 
+}

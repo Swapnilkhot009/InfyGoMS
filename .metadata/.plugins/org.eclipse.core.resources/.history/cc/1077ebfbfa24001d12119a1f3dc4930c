@@ -1,0 +1,14 @@
+package com.infygo.tickets.controller;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@FeignClient(name="PassangerMS",url="http://localhost:9000/")
+public interface passangerFeign {
+	@PostMapping("/infygo/addPassanger/{id}/{gender}/{name}/{age}/{pnr}")
+	public void addPassanger(@PathVariable("id") Integer id,@PathVariable("gender") String gender
+			,@PathVariable("name") String name,@PathVariable("age") String age,
+			@PathVariable("pnr") int pnr);
+}

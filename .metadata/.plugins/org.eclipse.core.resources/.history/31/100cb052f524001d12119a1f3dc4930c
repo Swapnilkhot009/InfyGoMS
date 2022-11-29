@@ -1,0 +1,29 @@
+package com.infygo.tickets.DTO;
+
+import java.time.LocalDate;
+import java.util.Set;
+public class TicketDTO {
+	
+	private Integer pnr;
+	private String flightId;
+	private Integer noOfSeats;
+	private String userId;
+	private String creditCardNumber;
+	private Set<PassangerDTO> passangers;
+
+	public TicketDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public TicketDTO(Integer pnr, String flightId, Integer noOfSeats, String userId, String creditCardNumber,
+			Set<PassangerDTO> passangers) {
+		super();
+		this.pnr = pnr;
+		this.flightId = flightId;
+		this.noOfSeats = noOfSeats;
+		this.userId = userId;
+		this.creditCardNumber = creditCardNumber;
+		this.passangers = passangers;
+	}
+	
+}

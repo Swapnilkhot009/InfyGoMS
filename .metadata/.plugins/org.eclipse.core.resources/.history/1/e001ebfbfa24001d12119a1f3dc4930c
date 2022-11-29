@@ -1,0 +1,14 @@
+package com.infygo.tickets.controller;
+
+import org.springframework.cloud.openfeign.FeignClient;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.infygo.tickets.DTO.UserDTO;
+
+
+@FeignClient(name="UserMS",url="http://localhost:9000/")
+public interface userFeign {
+	@RequestMapping("/infygo/userdetails/{userId}")
+	public UserDTO getUserDeailsById(@PathVariable("userId") String userId);
+}

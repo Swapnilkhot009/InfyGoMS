@@ -1,0 +1,14 @@
+package com.infygo.tickets.controller;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+
+@FeignClient(name="CreditCardMS",url="http://localhost:9000/")
+public interface creditCardFeign {
+	
+	@PostMapping("/infygo/addbill/{bill}")
+	public void updateBill(@PathVariable("bill") double bill);
+}

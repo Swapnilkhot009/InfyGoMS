@@ -1,0 +1,69 @@
+package com.infygo.tickets.DTO;
+import java.util.Set;
+public class TicketDTO {
+	
+	private Integer pnr;
+	private String flightId;
+	private Integer noOfSeats;
+	private String userId;
+	private String creditCardNumber;
+	private Set<PassangerDTO> passangers;
+
+	public TicketDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public TicketDTO(Integer pnr, String flightId, Integer noOfSeats, String userId, String creditCardNumber,
+			Set<PassangerDTO> passangers) {
+		super();
+		this.pnr = pnr;
+		this.flightId = flightId;
+		this.noOfSeats = noOfSeats;
+		this.userId = userId;
+		this.creditCardNumber = creditCardNumber;
+		this.passangers = passangers;
+	}
+	public Integer getPnr() {
+		return pnr;
+	}
+	public void setPnr(Integer pnr) {
+		this.pnr = pnr;
+	}
+	public String getFlightId() {
+		return flightId;
+	}
+	public void setFlightId(String flightId) {
+		this.flightId = flightId;
+	}
+	public Integer getNoOfSeats() {
+		return noOfSeats;
+	}
+	public void setNoOfSeats(Integer noOfSeats) {
+		this.noOfSeats = noOfSeats;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getCreditCardNumber() {
+		return creditCardNumber;
+	}
+	public void setCreditCardNumber(String creditCardNumber) {
+		this.creditCardNumber = creditCardNumber;
+	}
+	public Set<PassangerDTO> getPassangers() {
+		return passangers;
+	}
+	public void setPassangers(Set<PassangerDTO> passangers) {
+		this.passangers = passangers;
+	}
+	@Override
+	public String toString() {
+		return "TicketDTO [pnr=" + pnr + ", flightId=" + flightId + ", noOfSeats=" + noOfSeats + ", userId=" + userId
+				+ ", creditCardNumber=" + creditCardNumber + ", passangers=" + passangers + "]";
+	}
+	
+	
+}

@@ -1,0 +1,28 @@
+package com.infygo.passangers.service;
+import java.util.Set;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
+import com.infygo.passangers.entity.Passanger;
+import com.infygo.passangers.repository.PassangerRepository;
+
+@Service
+@PropertySource("classpath:validation.properties")
+public class PassangerService { 
+	@Autowired
+	private PassangerRepository passangerRepository; 
+	
+
+	public void addPassanger(Integer id, String gender, String name, String age, int pnr) {
+		Passanger passanger = new Passanger();
+		passanger.setPassangeraAge(age);
+		passanger.setPassangerId(id);
+		passanger.setPassangerName(name);
+		passanger.setPassangerGender(gender);
+		passanger.setTicketPnr(pnr);
+		passangerRepository.save(passanger);
+		
+	}
+}

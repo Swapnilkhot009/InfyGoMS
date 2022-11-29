@@ -1,0 +1,43 @@
+package com.infygo.creditcard.controller;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.infygo.creditcard.entity.CreditCard;
+import com.infygo.creditcard.exception.InvalidCredentialsException;
+import com.infygo.creditcard.exception.NotExstingException;
+import com.infygo.creditcard.service.CreditCardService;
+
+@RestController
+@RequestMapping("/infygo")
+public class CreditCardController {
+	
+	@Autowired
+	private CreditCardService creditCardService;
+	@Autowired
+	private Environment environment;
+	
+	
+	@PostMapping("/newCreditCard")
+	public void addCard() throws InvalidCredentialsException {
+		creditCardService.addNewCard();
+	}
+	
+	@PostMapping("/payment")
+	public ResponseEntity<String> payment(@RequestBody CreditCardDTO creditCard) throws InvalidCredentialsException {
+		return ResponseEntity.ok(creditCardService.makePayment(creditCard));
+	}
+	@PutMapping("/addbill/{bill}/{creditCardNumber}")
+	public ResponseEntity<String> addMyBill(@PathVariable("bill") double bill,
+			@PathVariable("creditCardNumber") String creditCardNumber) throws InvalidCredentialsException, NotExstingException{
+		creditCardService.updateBill(bill,creditCardNumber);
+		return ResponseEntity.ok(environment.getProperty("Bill.add"));
+	}
+	
+}

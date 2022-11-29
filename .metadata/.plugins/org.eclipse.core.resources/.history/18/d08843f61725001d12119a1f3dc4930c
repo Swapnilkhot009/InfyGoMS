@@ -1,0 +1,97 @@
+package com.infygo.creditcard.service;
+
+import java.util.Scanner;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+
+import com.infygo.creditcard.DTO.CreditCardDTO;
+import com.infygo.creditcard.entity.CreditCard;
+import com.infygo.creditcard.exception.InvalidCredentialsException;
+import com.infygo.creditcard.exception.NotExstingException;
+import com.infygo.creditcard.repository.CreditCardRepository;
+
+
+
+@Service
+@PropertySource("classpath:validation.properties")
+public class CreditCardService {
+	
+	@Autowired
+	private CreditCardRepository creditCardRepository;	
+	@Autowired
+	private Environment environment;
+	private  static Scanner scan=new Scanner(System.in);
+	public void addNewCard() throws InvalidCredentialsException{
+		CreditCard creditCard = new CreditCard();
+		System.out.println("Enter 7 digit card number");
+		String number= scan.next();
+		if(number.length()==7) 
+			creditCard.setCardNumber(number);
+		else
+			throw new InvalidCredentialsException("Invalid.Credentials");
+		System.out.println("Enter apin");
+		String apin= scan.next();
+		creditCard.setApin(apin);
+		System.out.println("Enter Card Holder Name");
+		String name= scan.next();
+		creditCard.setCardHolderName(name);
+		System.out.println("Enter 3 digit CVV number");
+		String cvv= scan.next();
+		if(cvv.length()==3)
+			creditCard.setCvv(cvv);
+		else
+			throw new InvalidCredentialsException(environment.getProperty("Invalid.Credentials"));
+		
+		System.out.println("Enter expiary month");
+		String month=scan.next();
+		creditCard.setExpiryMonth(month);
+		System.out.println("Enter expiary Year");
+		String year=scan.next();
+		creditCard.setExpiryYear(year);
+		creditCard.setTotalBill("0");
+		creditCardRepository.save(creditCard);
+		System.out.println("CreditCard for "+ creditCard.getCardHolderName()+
+				" saved successfully");
+	}
+	@Transactional
+	public void updateBill(double bill,String creditCardNumber ) throws InvalidCredentialsException, NotExstingException {
+		if(creditCardNumber.length()==7) {
+			CreditCard creditCard = creditCardRepository.
+					findByCardNumber(creditCardNumber);
+			if(creditCard==null)
+				throw new NotExstingException(environment.getProperty("No.CreditCard"));
+			creditCard.setTotalBill(String.valueOf(Integer.parseInt(creditCard.getTotalBill())+(int)bill));
+			creditCardRepository.save(creditCard);
+		}else {
+			throw new InvalidCredentialsException(environment.getProperty("Invalid.Credentials"));
+		}		
+		
+	}
+	
+	@Transactional
+	public String makePayment(CreditCardDTO creditCard ) throws InvalidCredentialsException, NotExstingException {
+		
+		if(creditCard.getCardNumber().length()!=7)
+			throw new InvalidCredentialsException("Invalid.Credentials");
+		CreditCard Card = creditCardRepository.findByCardNumberAndCardHolderName(
+						creditCard.getCardNumber(), creditCard.getCardHolderName());
+		if(Card==null) {
+			throw new NotExstingException(environment.getProperty("No.CreditCard"));
+		}
+		if(!(Card.getApin().equals(creditCard.getApin()) && Card.getCvv().equals(creditCard.getCvv())))
+			throw new InvalidCredentialsException("Invalid.Credentials");
+		if(Integer.parseInt(Card.getTotalBill())==0) {
+			return environment.getProperty("No.Dues").toString();
+		}
+		Card.setTotalBill("0");
+			creditCardRepository.save(Card);
+		return environment.getProperty("Paid.Success");
+	}
+}
+
+
